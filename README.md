@@ -138,22 +138,6 @@ python feature_distance_verify.py \
     --data_path ./DATA
 ```
 
-### 4. Layer-wise Coding Rate Analysis
-
-Compare Euclidean vs. hyperbolic models across all 12 SSA layers:
-```bash
-python Visuliszation/crate_mssa.py \
-    --dataset cifar10 \
-    --ckpt_euc "logs/emp_euc/.../save_models/best.pt" \
-    --ckpt_hyp "logs/emp_hyp_proj/.../save_models/best.pt" \
-    --data_path ./DATA \
-    --samples_per_class 50
-```
-
-Outputs:
-- `token_cr_*_comparison.png` — White-box token coding rate R^c(Z^ℓ) with error bars
-- `mcr2_*_comparison.png` — R_total / R_intra / R_gap (inter-class / intra-class / discriminative gap)
-- `sparsity_*_comparison.png` — ISTA block output sparsity
 
 ## Project Structure
 
@@ -163,28 +147,6 @@ EMP-SSL-main2/
 ├── evaluate_finetune.py        # Fine-tuning / linear probe (--use_hyperbolic flag)
 ├── feature_distance_verify.py  # SCI verification + t-SNE + distance matrix
 ├── hyperbolic_utils.py         # expmap0, logmap0, mobius_add, full hyperbolic losses
-├── loss_ori.py                 # TotalCodingRate, MaximalCodingRateReduction (MCR²)
-├── func.py                     # chunk_avg utility
-│
-├── model/
-│   ├── model.py                # encoder class + HyperbolicProjectionHead
-│   └── crate.py                # CRATE_test: SSA + ISTA Transformer
-│
-├── dataset/
-│   ├── datasets.py             # Dataset loader (cifar10/100, tinyimagenet)
-│   └── aug.py                  # ContrastiveLearningViewGenerator (RandomResizedCrop)
-│
-├── Visuliszation/
-│   ├── crate_mssa.py           # Layer-wise coding rate + MCR² + sparsity comparison
-│   └── coding_rate.py          # CodingRate class (multi-head token coding rate)
-│
-├── SCI/                        # Semantic similarity matrices
-│   ├── CIFAR10/
-│   ├── CIFAR100/
-│   └── TinyImageNet/
-│
-├── tinyimagenet_semantic.py    # WordNet Wu-Palmer 200×200 similarity matrix
-└── cifar100_semantic.py        # CIFAR-100 20-superclass affinity matrix
 ```
 
 ## Datasets
